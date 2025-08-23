@@ -3,6 +3,9 @@ from constants import *
 from player import *
 from circleshape import *
 
+updatable_group = pygame.sprite.Group()
+drawable_group = pygame.sprite.Group()
+Player.containers = (updatable_group, drawable_group)
 
 def main():
     print("Starting Asteroids!")
@@ -18,7 +21,10 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill((0, 0, 0), rect=None, special_flags=0)
-        player.draw(screen)
+        for player in drawable_group:
+            player.draw(screen)
+        for player in updatable_group:
+            player.update(dt)
         dt = Clock.tick(60) / 1000
         pygame.display.flip()
 
